@@ -1,4 +1,4 @@
-const API_URL = "https://SEU_BACKEND_NO_RAILWAY.app"; // Coloque a URL do seu backend do Railway
+const API_URL = "https://maycon-production.up.railway.app/"; // Coloque a URL do seu backend do Railway
 
 async function entrarNoChat() {
     const email = document.getElementById("email").value;
