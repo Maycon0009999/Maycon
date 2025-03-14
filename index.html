@@ -1,71 +1,21 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Colorido</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: black;
-            color: white;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .container {
-            width: 90%;
-            max-width: 400px;
-            padding: 20px;
-            background: linear-gradient(45deg, red, purple);
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
-            border: 3px solid white;
-        }
-        input, button {
-            width: 90%;
-            margin: 10px 0;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        input {
-            background: black;
-            color: white;
-            border: 1px solid white;
-        }
-        button {
-            background: red;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        button:hover {
-            background: purple;
-        }
-    </style>
+    <title>Login</title>
+    <script defer src="script.js"></script>
 </head>
 <body>
+    <h2>Login</h2>
+    <input type="email" id="email" placeholder="Digite seu email">
+    <input type="password" id="password" placeholder="Digite sua senha">
+    <button onclick="entrarNoChat()">Entrar</button>
 
-    <div class="container">
-        <h2>Bem-vindo ao Chat!</h2>
-        <input type="text" id="username" placeholder="Nome de usuário">
-        <input type="password" id="password" placeholder="Senha">
-        <button onclick="entrarNoChat()">Entrar</button>
-    </div>
-
-    <script>
-        function entrarNoChat() {
-            // Simulação de login
-            window.location.href = "chat.html"; // Redireciona para o chat principal
-        }
-    </script>
-
+    <h2>Cadastro</h2>
+    <input type="text" id="name" placeholder="Digite seu nome">
+    <input type="email" id="registerEmail" placeholder="Digite seu email">
+    <input type="password" id="registerPassword" placeholder="Digite sua senha">
+    <button onclick="cadastrar()">Cadastrar</button>
 </body>
 </html>
