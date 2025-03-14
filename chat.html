@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Principal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: black;
+            color: white;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 25%;
+            background: linear-gradient(45deg, red, black);
+            padding: 20px;
+            border-right: 3px solid white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: url('') center/cover no-repeat;
+            transition: background 0.5s ease-in-out;
+        }
+        .chat-box {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            border-bottom: 3px solid white;
+        }
+        .message {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 0, 0, 0.8);
+            padding: 10px;
+            border-radius: 10px;
+            margin: 5px 0;
+            width: fit-content;
+            max-width: 60%;
+        }
+        .message img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .input-box {
+            display: flex;
+            padding: 10px;
+            background: black;
+            border-top: 3px solid white;
+        }
+        input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            background: black;
+            color: white;
+            border: 1px solid white;
+        }
+        button {
+            background: red;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-left: 5px;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: purple;
+        }
+        .settings {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .avatar-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid white;
+            margin-bottom: 10px;
+            transition: 0.3s;
+        }
+        .file-input {
+            display: none;
+        }
+        .custom-btn {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .custom-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+<body onload="carregarConfig()">
+
+    <div class="sidebar">
+        <h3>Configurações</h3>
+
+        <img id="avatarPreview" class="avatar-preview" src="https://i.pravatar.cc/80" alt="Avatar">
+        
+        <label class="custom-btn" for="avatarInput">Mudar Avatar</label>
+        <input type="file" id="avatarInput" class="file-input" accept="image/*" onchange="mudarAvatar()">
+        
+        <br><br>
+        
+        <label class="custom-btn" for="wallpaperInput">Mudar Wallpaper</label>
+        <input type="file" id="wallpaperInput" class="file-input" accept="image/*" onchange="mudarWallpaper()">
+    </div>
+
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-box" id="chat">
+            <div class="message">
+                <img id="userAvatar" src="https://i.pravatar.cc/40" alt="Avatar">
+                <span>Olá! Bem-vindo ao chat.</span>
+            </div>
+        </div>
+        <div class="input-box">
+            <input type="text" id="mensagem" placeholder="Digite sua mensagem...">
+            <button onclick="enviarMensagem()">Enviar</button>
+        </div>
+    </div>
+
+    <script>
+        function enviarMensagem() {
+            var input = document.getElementById("mensagem");
+            var chat = document.getElementById("chat");
+            var avatarUrl = localStorage.getItem("avatar") || "https://i.pravatar.cc/40";
+
+            if (input.value.trim() !== "") {
+                var novaMensagem = document.createElement("div");
+                novaMensagem.classList.add("message");
+                
+                var avatar = document.createElement("img");
+                avatar.src = avatarUrl;
+                avatar.alt = "Avatar";
+
+                var texto = document.createElement("span");
+                texto.textContent = input.value;
+
+                novaMensagem.appendChild(avatar);
+                novaMensagem.appendChild(texto);
+                chat.appendChild(novaMensagem);
+                input.value = "";
+                chat.scrollTop = chat.scrollHeight;
+            }
+        }
+
+        function mudarWallpaper() {
+            var file = document.getElementById("wallpaperInput").files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById("chatContainer").style.background = `url(${e.target.result}) center/cover no-repeat`;
+                    localStorage.setItem("wallpaper", e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function mudarAvatar() {
+            var file = document.getElementById("avatarInput").files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById("avatarPreview").src = e.target.result;
+                    document.getElementById("userAvatar").src = e.target.result;
+                    localStorage.setItem("avatar", e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function carregarConfig() {
+            var wallpaper = localStorage.getItem("wallpaper");
+            var avatar = localStorage.getItem("avatar");
+
+            if (wallpaper) {
+                document.getElementById("chatContainer").style.background = `url(${wallpaper}) center/cover no-repeat`;
+            }
+            if (avatar) {
+                document.getElementById("avatarPreview").src = avatar;
+                document.getElementById("userAvatar").src = avatar;
+            }
+        }
+    </script>
+
+</body>
+</html>
